@@ -10,22 +10,17 @@ jobs:
       image: kivy/buildozer:latest
       env:
         CREATE_USER: "no"
+        _JAVA_OPTIONS: "-Xmx4096m -XX:MaxMetaspaceSize=512m"
     steps:
       - uses: actions/checkout@v4
 
-      - name: Increase Gradle memory
+      - name: Build APK (armeabi-v7a only)
         run: |
           cd android_app
-          echo "org.gradle.jvmargs=-Xmx4g -XX:MaxMetaspaceSize=512m" >> gradle.properties || true
-
-      - name: Build APK
-        run: |
-          cd android_app
-          export GRADLE_OPTS="-Xmx4g -XX:MaxMetaspaceSize=512m"
           yes 2>/dev/null | buildozer android debug
         env:
           BUILDOZER_WARN_ON_ROOT: "0"
-          GRADLE_OPTS: "-Xmx4g -XX:MaxMetaspaceSize=512m"
+          _JAVA_OPTIONS: "-Xmx4096m -XX:MaxMetaspaceSize=512m"
 
       - name: Upload APK
         if: always()
