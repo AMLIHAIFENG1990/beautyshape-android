@@ -13,7 +13,7 @@ android.minapi = 26
 android.api = 33
 android.ndk = 25b
 android.build_tools_version = 34.0.0
-android.archs = armeabi-v7a
+android.archs = arm64-v8a,armeabi-v7a
 log_level = 2
 
 [buildozer]
