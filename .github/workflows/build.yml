@@ -13,14 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Pre-install Android SDK build-tools
-        run: |
-          SDK_DIR="/github/home/.buildozer/android/platform/android-sdk"
-          mkdir -p "$SDK_DIR/licenses"
-          echo -e "\n24333f8a63b6825ea9c5514f83c2829b004d1fee" > "$SDK_DIR/licenses/android-sdk-license"
-          echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$SDK_DIR/licenses/android-sdk-preview-license"
-          yes 2>/dev/null | sdkmanager --sdk_root="$SDK_DIR" "build-tools;34.0.0" "platforms;android-33" || true
-
       - name: Build APK
         run: |
           cd android_app
