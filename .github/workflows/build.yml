@@ -13,12 +13,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Increase Gradle memory
+        run: |
+          cd android_app
+          echo "org.gradle.jvmargs=-Xmx4g -XX:MaxMetaspaceSize=512m" >> gradle.properties || true
+
       - name: Build APK
         run: |
           cd android_app
+          export GRADLE_OPTS="-Xmx4g -XX:MaxMetaspaceSize=512m"
           yes 2>/dev/null | buildozer android debug
         env:
           BUILDOZER_WARN_ON_ROOT: "0"
+          GRADLE_OPTS: "-Xmx4g -XX:MaxMetaspaceSize=512m"
 
       - name: Upload APK
         if: always()
