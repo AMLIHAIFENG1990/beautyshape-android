@@ -6,15 +6,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: kivy/buildozer:latest
+      env:
+        CREATE_USER: "no"
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build APK with Buildozer
-        uses: ArtemSBulgakov/buildozer-action@v1
-        id: buildozer
-        with:
-          workdir: android_app
-          buildozer_version: stable
+      - name: Build APK
+        run: |
+          cd android_app
+          buildozer android debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
